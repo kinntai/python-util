@@ -22,13 +22,10 @@ def copy(origin, target):
     origin = os.path.normpath(origin)
     target = os.path.normpath(target)
     print 'copy %s %s' % (origin, target)
-    if os.path.exists(origin):
-        if os.path.isdir(origin):
-            shutil.copytree(origin, target)
-        else:
-            shutil.copy(origin, target)
+    if os.path.isdir(origin):
+        shutil.copytree(origin, target)
     else:
-        print 'Not exists ' + origin
+        shutil.copy(origin, target)
 
 #------------------------------------------------------------------------------
 # 移動
@@ -43,18 +40,16 @@ def move(origin, target):
 def remove(path):
     path = os.path.normpath(path)
     print 'remove ' + path
-    if os.path.exists(path):
-        if os.path.isdir(path):
-            shutil.rmtree(path)
-        else:
-            os.remove(path)
+    if os.path.isdir(path):
+        shutil.rmtree(path)
     else:
-        print 'Not exists ' + path
+        os.remove(path)
 
 #------------------------------------------------------------------------------
 # ファイル書き込み
 #------------------------------------------------------------------------------
 def write_file(path, content):
+    path = os.path.normpath(path)
     print 'write file ' + path
     file = open(path, 'w')
     file.write(content)
@@ -64,6 +59,7 @@ def write_file(path, content):
 # ファイル読み込み
 #------------------------------------------------------------------------------
 def read_file(path):
+    path = os.path.normpath(path)
     print 'read file ' + path
     file = open(path, 'r')
     content = file.read()
